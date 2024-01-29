@@ -4,6 +4,8 @@ const jwt = require("jsonwebtoken");
 const { body, validationResult } = require("express-validator");
 const { User } = require("../models");
 
+//Validation
+
 const loginUserValidation = [
   body("password")
     .notEmpty()
@@ -16,6 +18,8 @@ const loginUserValidation = [
     .isLength({ min: 10 })
     .withMessage("mobile must be at least 10 digit"),
 ];
+
+// Get User by ID
 
 router.get("/user/:id", async (req, res) => {
   try {
@@ -34,6 +38,8 @@ router.get("/user/:id", async (req, res) => {
   }
 });
 
+//Add New User
+
 router.post("/user", async (req, res) => {
   const { name, password, mobile } = req.body;
   try {
@@ -44,6 +50,8 @@ router.post("/user", async (req, res) => {
     res.status(500).json({ error: error, message: "Internal Server Error" });
   }
 });
+
+// Login Api
 
 router.post("/user/login", loginUserValidation, async (req, res, next) => {
   const errors = validationResult(req);
